@@ -61,6 +61,9 @@ void delay_us_DWT(unsigned long  uSec);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define B1_Pin GPIO_PIN_13
+#define B1_GPIO_Port GPIOC
+#define B1_EXTI_IRQn EXTI15_10_IRQn
 #define Led_Pin GPIO_PIN_5
 #define Led_GPIO_Port GPIOA
 #define Psense_Pin GPIO_PIN_2

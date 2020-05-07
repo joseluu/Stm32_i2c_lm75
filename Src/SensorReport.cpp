@@ -4,6 +4,8 @@ extern "C"
 }
 
 #include "i2c.h"
+#include <gpio.h>
+#include <tim.h>
 #include "stm32f3xx_hal_i2c.h"
 #include "SensorReport.h"
 #include "LM75.h"
@@ -122,10 +124,27 @@ void doReport() {
 	}
 	pSerial->output.puts("\r");
 
-	char strConsole[SERIAL_BUFFER_SIZE];
+}
 
-	if (pSerial->input.fgetsNonBlocking(strConsole,48)) {
-		int len = strlen(strConsole);
-		
+static int which;
+void doAcquisitionStep()
+{
+	doLedToggle();
+	sensors[which++]->acquireTemp(true);
+	if (which >= SENSOR_COUNT){
+		which = 0;
 	}
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim == &htim1) {
+		doAcquisitionStep();
+	} else {
+		Error_Handler();
+	}
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	doAcquisitionStep();
 }

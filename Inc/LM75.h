@@ -17,6 +17,7 @@ public:
 	TempI2C_LM75(I2C_HandleTypeDef * hi2c, uint8_t i2c_addr);
 
 	// Temperature and temperature ranges in degrees centigrade
+	float acquireTemp(bool bIT = false);
 	float getTemp();
 
 	void setTHyst(float newTHyst);
@@ -37,6 +38,8 @@ public:
 	bool getShutdown();
 	void setShutdown(bool newShutdown);
 
+	void storeTemp();
+
 	static const uint8_t baseAddress = 0x48;
 private:
 
@@ -50,17 +53,24 @@ private:
 			uint8_t thermostat_fault_tolerance : 2;
 			uint8_t reserved : 3;
 		} mbits;
-
 		uint8_t mbyte;
-
 	} CfgRegister;
+	CfgRegister m_cfgRegister;
+	typedef union _TempRegister {
+		uint8_t mdata[2];
+		unsigned short mTempX;
+		short mTempS;
+	} TempRegister;
+	TempRegister m_tempRegister;
+	float m_fTemp;
+	TempRegister m_tempOS;
+	TempRegister m_tempHyst;
 
 	LM75Register previousReg = temp_reg;// default at initialization
-	unsigned short getReg(LM75Register reg);
+	unsigned short getReg(LM75Register reg, uint8_t * ptrData, bool bIT);
 	void setReg(LM75Register reg, unsigned newValue);
 
 	uint16_t m_u16I2CAddr;
-
 	I2C_HandleTypeDef * m_hi2c;
 	
 };

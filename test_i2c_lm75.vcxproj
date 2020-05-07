@@ -78,6 +78,7 @@
   </ImportGroup>
   <ItemGroup />
   <ItemGroup>
+    <ClCompile Include="Src\dma.c" />
     <ClCompile Include="Src\gpio.c" />
     <ClCompile Include="Src\i2c.c" />
     <ClCompile Include="Src\LM75.cpp" />
@@ -87,7 +88,9 @@
     <ClCompile Include="Src\stm32f3xx_hal_msp.c" />
     <ClCompile Include="Src\stm32f3xx_it.c" />
     <ClCompile Include="Src\system_stm32f3xx.c" />
+    <ClCompile Include="Src\tim.c" />
     <ClCompile Include="Src\usart.c" />
+    <ClInclude Include="Inc\dma.h" />
     <ClInclude Include="Inc\gpio.h" />
     <ClInclude Include="Inc\i2c.h" />
     <ClInclude Include="Inc\LM75.h" />
@@ -96,6 +99,7 @@
     <ClInclude Include="Inc\Serial.h" />
     <ClInclude Include="Inc\stm32f3xx_hal_conf.h" />
     <ClInclude Include="Inc\stm32f3xx_it.h" />
+    <ClInclude Include="Inc\tim.h" />
     <ClInclude Include="Inc\usart.h" />
     <None Include="stm32.mak" />
     <ClCompile Include="$(BSP_ROOT)\STM32F3xxxx\StartupFiles\startup_stm32f334x8.c" />
